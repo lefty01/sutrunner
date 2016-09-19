@@ -1,0 +1,83 @@
+body {
+    padding: 30px;
+    font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+h2 {
+    margin:0 0 .5em 0;
+}
+
+a {
+    color: #00B7FF;
+}
+
+#emailaddress {
+  color: #11BB1B;
+}
+
+#wrapper {
+    padding-left:312px;
+    position:relative;
+}
+
+#runnerList {
+    margin:0 0 30px 0;
+}
+
+#runnerList table, #starterList table {
+    border-collapse:separate;
+    border-spacing:1px;
+    background:#CCC;
+}
+
+/*
+.runnertable {
+    border-collapse:separate;
+    border-spacing:1px;
+    border:1px solid #CCC;
+    background:#CCC;
+}
+*/
+
+#runnerList table th, #starterList table th {
+    background:#EEE;
+    font-weight:600;
+    padding:10px 20px;
+    text-align:center;
+}
+
+#runnerList table tbody, #starterList table tbody {
+    padding:0; margin:0;
+    border-collapse:collapse;
+    border-spacing:0px;
+}
+
+#runnerList table td, #starterList table td {
+    background:#FFF;
+    padding:5px 10px;
+    text-align:center;
+}
+
+#starterList table tr:hover td {
+    background-color:#CCC;
+}
+
+
+/* #runnerInfo { */
+/*     width:250px; */
+/*     position:absolute; */
+/*     top:0; left:0; */
+/* } */
+
+/* #runnerInfo p { */
+/*     padding:15px; */
+/*     border:1px solid #CCC; */
+/*     background:rgba(80,120,255,0.05); */
+/* } */
+
+fieldset {
+    border:0;
+    padding:0; margin:0;
+}
+
+/* comment */

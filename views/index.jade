@@ -1,0 +1,87 @@
+extends layout
+
+block content
+
+  div.container
+    h1= title
+
+    ul#maintabbar.nav.nav-tabs
+      li.active: a(data-toggle="tab", href="#home") Home
+      li: a(data-toggle="tab", href="#menu_add" ) Add Runner
+      li: a(data-toggle="tab", href="#menu_edit") Edit Runner
+      li: a(data-toggle="tab", href="#menu_show") Show Runner(s)
+      li: a(data-toggle="tab", href="#menu_lists") Lists/Reports
+
+    div.tab-content
+      div#home.tab-pane.fade.in.active
+        h3 Home
+        p.
+          Manage runners entering SUT100.
+          Add or edit runners, delete them or move between lists.
+          Allows you to generate pages for live results, bib prints, etc ...
+
+        h4 Runner List
+        #runnerList
+          table
+            thead
+              th #
+              th Start No.
+              th Name
+              th Email
+              th DuvId
+              th Paid
+              th Size
+              th Delete?
+              th Edit?
+            tbody
+
+        #summaryTable
+          table
+            tbody
+
+        div#myModal.modal.fade(role='dialog')
+          div.modal-dialog
+            div.modal-content
+              div.modal-header
+                button.close(type='button' data-dismiss='modal') &times;
+                h4.modal-title Runner Info
+              div.modal-body
+                div#runnerInfo
+                  include ./inc_userinfo.jade
+              div.modal-footer
+                button#runnerInfoDeleteBtn.btn.btn-default Delete 
+                button.btn.btn-default(type='button' data-dismiss='modal') Close
+                
+        // end runner info
+
+
+      div#menu_add.tab-pane.fade
+
+        #wrapper
+          #newRunnerInfo
+          //   include ./inc_newuserinfo.jade
+          // // end user info
+
+          // ADD USER
+          h3 Enter details ...
+          #addRunner
+            include ./inc_addrunner.jade
+          // /ADD USER
+        // /wrapper
+
+      div#menu_edit.tab-pane.fade
+
+        // EDIT RUNNER
+        h3 Edit details ...
+        #editRunner
+          include ./inc_editrunner.jade
+        // EDIT USER
+        // /wrapper
+        
+
+      div#menu_show.tab-pane.fade
+        h3 Show Runners
+
+      div#menu_lists.tab-pane.fade
+        h3 Gernerate Lists, Reports, etc.
+        include ./inc_genlist.jade

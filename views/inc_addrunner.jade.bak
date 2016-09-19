@@ -1,0 +1,68 @@
+
+
+fieldset.col.s12
+  div.row
+    div.input-field.col.s4
+      input#inputFirstName(type='text', placeholder='First Name')
+    div.input-field.col.s4
+      input#inputLastName(type='text')
+      label(for="inputLastName") Last Name
+    div.input-field.col.s4
+      input#inputDuvId(type='text', placeholder='DUV Id')
+  div.row
+    div.input-field.col.s4
+      input#inputCatGer(type='text', placeholder='Cat. German')
+    div.input-field.col.s4
+      input#inputClub(type='text', placeholder='Club')
+    div.input-field.col.s4
+      input#inputHomepage(type='text', placeholder='Homepage')
+  div.row
+    div.input-field.col.s4
+      input#inputEmail(type='text', placeholder='Email')
+    div.input-field.col.s4
+      input#inputMobile(type='text', placeholder='Mobile #')
+    div.input-field.col.s4
+      input#inputPhone(type='text', placeholder='Phone #')
+  div.row
+    div.input-field.col.s4
+      input#inputCatInt(type='text', placeholder='Cat. Int.')
+    div.input-field.col.s4
+      input#inputDateOfBirth(type='text', placeholder='Birthday')
+    div.input-field.col.s4
+      input#inputYearOfBirth(type='text', placeholder='Year of birth')
+    div.input-field.col.s4
+      input#inputNationality(type='text', placeholder='Nationality')
+      input#inputResidence(type='text', placeholder='Residence')
+
+  div.row
+    // input checkbox payed, tshirt, sleep ...
+    input#inputPaid(type='checkbox')
+    | Paid 
+
+    input#inputSleep(type='checkbox')
+    | Sleep
+
+    input#inputPacer(type='checkbox')
+    | Pacer
+
+    select#inputTsize
+      -var sizes = ['S', 'M', 'L', 'XL']
+      each size in sizes
+        option(value=size, selected=('M'==size)) #{size}
+//        -var sizes = ['S', 'M', 'L', 'XL']
+//        each size in sizes
+//          option(value=size, selected=('M'==size)) #{size}
+//      label T-Shirt Size
+
+        
+        option(value="S") S
+        option(value="M") M
+        option(value="L") L
+        option(value="") XL
+
+    | T-Shirt Size
+
+  br
+  br
+  button#btnAddRunner Add Runner
+  button#btnLookupDuv Lookup DUV ID
