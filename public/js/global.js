@@ -47,6 +47,7 @@ function populateTable() {
     var runnerNum = 1;
     var paidNum = 0;
     var hasPaid;
+    var willSleep = 0;
     var numS = 0;
     var numM = 0;
     var numL = 0;
@@ -63,6 +64,7 @@ function populateTable() {
             else {
                 hasPaid = "No";
             }
+            if ("true" == this.sleep)   willSleep++;
             if ("true" == this.tsizeS)  numS++;
             if ("true" == this.tsizeM)  numM++;
             if ("true" == this.tsizeL)  numL++;
@@ -86,6 +88,7 @@ function populateTable() {
 
         summaryContent += '<tr><td>Num runners Paid: </td><td>' + paidNum + '</td></tr>';
         summaryContent += '<tr><td>Missing: </td><td>' + (runnerNum - 1 - paidNum) + '</td></tr>';
+        summaryContent += '<tr><td>Sleep : </td><td>' + willSleep + '</td></tr>';
         summaryContent += '<tr><td>Size S: </td><td>' + numS + '</td></tr>';
         summaryContent += '<tr><td>Size M: </td><td>' + numM + '</td></tr>';
         summaryContent += '<tr><td>Size L: </td><td>' + numL + '</td></tr>';
@@ -119,6 +122,7 @@ function showRunnerInfo2(data) {
     $('#userInfoPaid').text(data.paid);
     $('#userInfoSleep').text(data.sleep);
     $('#userInfoPacer').text(data.pacer);
+    $('#userInfoEarlyStart').text(data.earlystart);
     $('#userInfoSize').text(data.tsize);
 }
 function fillEditTable(data) {
@@ -158,6 +162,10 @@ function fillEditTable(data) {
         $('#editRunner fieldset input#inputPacer1').prop('checked', true).change();
     else
         $('#editRunner fieldset input#inputPacer1').prop('checked', false).change();
+    if ('true' === data.earlystart)
+        $('#editRunner fieldset input#inputEarlyStart1').prop('checked', true).change();
+    else
+        $('#editRunner fieldset input#inputEarlyStart1').prop('checked', false).change();
 
     // $('#editRunner fieldset  input#inputSizeS').prop('checked', data.tsizeS.valueOf()).change();
     // $('#editRunner fieldset  input#inputSizeM').prop('checked', data.tsizeM.valueOf()).change();
@@ -213,6 +221,7 @@ function showRunnerInfo(event) {
         $('#userInfoPaid').text(data.paid);
         $('#userInfoSleep').text(data.sleep);
         $('#userInfoPacer').text(data.pacer);
+        $('#userInfoEarlyStart').text(data.earlystart);
         $('#userInfoSize').text(data.tsize);
     });
 
@@ -515,7 +524,7 @@ function saveRunner(event) {
     console.log("saveRunner: tsize=" + tsizeVal);    
 
     var runner = {
-        'startnum'     : $('#editRunner fieldset input#inputStartNum').val(),
+        'startnum'     : parseInt($('#editRunner fieldset input#inputStartNum').val()),
         'firstname'    : $('#editRunner fieldset input#inputFirstName').val(),
         'lastname'     : $('#editRunner fieldset input#inputLastName').val(),
         'duvid'        : $('#editRunner fieldset input#inputDuvId').val(),
@@ -533,6 +542,7 @@ function saveRunner(event) {
         'paid'         : $('#editRunner fieldset input#inputPaid1').is(":checked"),
         'sleep'        : $('#editRunner fieldset input#inputSleep1').is(":checked"),
         'pacer'        : $('#editRunner fieldset input#inputPacer1').is(":checked"),
+        'earlystart'   : $('#editRunner fieldset input#inputEarlyStart1').is(":checked"),
         'tsize'        : tsizeVal,
         'tsizeS'       : $('#editRunner fieldset input#inputSizeS').is(":checked"),
         'tsizeM'       : $('#editRunner fieldset input#inputSizeM').is(":checked"), 

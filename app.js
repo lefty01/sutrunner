@@ -33,6 +33,7 @@ var db = monk('localhost:9999/sutrunners1');
 
 //(NAME FIRSTNAME YEAR CAT PLACE CLUB NAT EMAIL DUVID PHONE MONEY TSIZE SLEEP PACER WAITLIST);
 var runnerSchema = mongoose.Schema({
+    startnum: Number,
     lastname: String,
     firstname: String,
     duvid: Number,
