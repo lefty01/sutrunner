@@ -9,21 +9,19 @@ var monk = require('monk');
 var mongoose = require('mongoose');
 var assert = require('assert');
 
-//var db = monk('localhost:27017/sutrunners1');
+var db = monk('localhost:27017/sutrunners1', function(err, db){
+    if (err) {
+	console.error("error: not connected to database:", err.message);
+    } else {
+	console.log("connected to database");
+    }
+});
 
-var db = monk('localhost:9999/sutrunners1');
+//var db = monk('localhost:9999/sutrunners1');
 // this requires ssh port forwarding ...
 // ssh -fN -l user  -L 9999:localhost:54321 server.com
 
 
-// FIXME check if connected ... but how -> db object? or switch to mongoose already
-// MongoClient.connect(url, function(err, db) {
-//   assert.equal(null, err);
-//   console.log("Connected correctly to server.");
-//   db.close();
-// });
-
-// could do this ... or like below without the Schema var.
 //var Schema = mongoose.Schema;
 //var appSchema = new Schema({ .. });
 

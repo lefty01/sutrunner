@@ -26,6 +26,9 @@ $(document).ready(function() {
     // Gen email list button
     $('#btnGenEmailList').on('click', genEmailList);
 
+    //$('#btnGenVpList').on('click', genVpList);
+
+    
     // Delete User link click
     $('#runnerList table tbody').on('click', 'td a.linkdeleteuser', deleteUser);
     $('#runnerInfoDeleteBtn').on('click', deleteUser);
@@ -242,6 +245,14 @@ function showRunnerInfo(event) {
 
 
 };
+
+// function genVpList(event) {
+//     event.preventDefault();
+//     alert('vp list');
+//     $('#vpList').toggle();
+//     $('#starterList').hide();
+
+// }
 
 function genStartList(event) {
     event.preventDefault();
