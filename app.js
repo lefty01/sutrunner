@@ -9,7 +9,9 @@ var monk = require('monk');
 var mongoose = require('mongoose');
 var assert = require('assert');
 
-var db = monk('localhost:27017/sutrunners1', function(err, db){
+
+
+var db = monk('localhost:9999/wsut2017', function(err, db){
     if (err) {
 	console.error("error: not connected to database:", err.message);
     } else {
