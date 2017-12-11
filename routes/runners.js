@@ -8,11 +8,11 @@ var router = express.Router();
 //});
 
 /*
- * GET userlist.
+ * GET runnerlist.
  */
-router.get('/userlist', function(req, res) {
+router.get('/runnerlist', function(req, res) {
     var db = req.db;
-    var collection = db.get('userlist');
+    var collection = db.get('runnerlist');
     collection.find({}, {}, function(err, docs) {
         res.json(docs);
     });
@@ -22,7 +22,7 @@ router.get('/userlist', function(req, res) {
 
 router.get('/starterlist', function(req, res) {
     var db = req.db;
-    var collection = db.get('userlist');
+    var collection = db.get('runnerlist');
 
     collection.find({}, {fields: { _id: 0,                         
                                    duvid : 1,
@@ -41,7 +41,7 @@ router.get('/starterlist', function(req, res) {
 
 router.get('/starter_html', function(req, res) {
     //var db = req.db;
-    //var collection = db.get('userlist');
+    //var collection = db.get('runnerlist');
 
 });
 
@@ -51,7 +51,7 @@ router.get('/starter_html', function(req, res) {
  */
 router.get('/getuser/:id', function(req, res) {
     var db = req.db;
-    var collection = db.get('userlist');
+    var collection = db.get('runnerlist');
     console.log("runners document id: " + req.params.id);
     collection.findOne({_id: req.params.id}, function(err, docs) {
 	if (err === null) {
@@ -70,7 +70,7 @@ router.get('/getuser/:id', function(req, res) {
  */
 router.post('/adduser', function(req, res) {
     var db = req.db;
-    var collection = db.get('userlist');
+    var collection = db.get('runnerlist');
     collection.insert(req.body, function(err, result) {
         assert.equal(err, null);
         
@@ -85,7 +85,7 @@ router.post('/adduser', function(req, res) {
  */
 router.delete('/deleteuser/:id', function(req, res) {
     var db = req.db;
-    var collection = db.get('userlist');
+    var collection = db.get('runnerlist');
     var userToDelete = req.params.id;
     collection.remove({ '_id' : userToDelete }, function(err) {
         res.send((err === null) ? { msg: '' } : { msg:'error: ' + err });
@@ -98,7 +98,7 @@ router.delete('/deleteuser/:id', function(req, res) {
 /* put or patch !?! FIXME */
 router.put('/update/:id', function(req, res) {
     var db = req.db;
-    var collection = db.get('userlist');
+    var collection = db.get('runnerlist');
     var runnerToUpdate = req.params.id;
 
     console.log("Update runner: ID=" + runnerToUpdate);

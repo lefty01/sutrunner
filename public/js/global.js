@@ -1,5 +1,5 @@
 
-// Userlist data array for filling in info box
+// runnerlist data array for filling in info box
 var runnerListData = [];
 
 // DOM Ready =============================================================
@@ -57,7 +57,7 @@ function populateTable() {
     var numXL = 0;
     
     // jQuery AJAX call for JSON
-    $.getJSON( '/runners/userlist', function(data) {
+    $.getJSON( '/runners/runnerlist', function(data) {
         // For each item in our JSON, add a table row and cells to the content string
         $.each(data, function() {
             if (this.paid == "true") {
@@ -261,7 +261,7 @@ function genStartList(event) {
 
     //confirm("Startliste anzeige?");
     // jQuery AJAX call for JSON
-    //  $.getJSON( '/runners/userlist', function(data) {
+    //  $.getJSON( '/runners/runnerlist', function(data) {
     $.getJSON( '/runners/starterlist', function(data) {
         // For each item in our JSON, add a table row and cells to the content string
         $.each(data, function(){
@@ -287,7 +287,7 @@ function genEmailList(event) {
     event.preventDefault();
     var emailList = '';
 
-    $.getJSON( '/runners/userlist', function(data) {
+    $.getJSON( '/runners/runnerlist', function(data) {
         $.each(data, function() {
 	    console.log(this.email);
 	    if (this.email) emailList += this.email + ', ';
