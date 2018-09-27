@@ -1,6 +1,7 @@
 
 // runnerlist data array for filling in info box
 var runnerListData = [];
+var numberOfRunners = 0;
 
 // DOM Ready =============================================================
 $(document).ready(function() {
@@ -51,6 +52,7 @@ function populateTable() {
     var paidNum = 0;
     var hasPaid;
     var willSleep = 0;
+    var sleeps;
     var numS = 0;
     var numM = 0;
     var numL = 0;
@@ -60,18 +62,23 @@ function populateTable() {
     $.getJSON( '/runners/runnerlist', function(data) {
         // For each item in our JSON, add a table row and cells to the content string
         $.each(data, function() {
-            if (this.paid == "true") {
+            if ("true" === this.paid) {
                 hasPaid = "<b>YES</b>";
                 paidNum++;
-            }
-            else {
+            } else {
                 hasPaid = "No";
             }
-            if ("true" == this.sleep)   willSleep++;
-            if ("true" == this.tsizeS)  numS++;
-            if ("true" == this.tsizeM)  numM++;
-            if ("true" == this.tsizeL)  numL++;
-            if ("true" == this.tsizeXL) numXL++;
+
+            if ("true" === this.sleep) {
+		sleeps = "Yes";
+		willSleep++;
+	    } else {
+		sleeps = "No";
+	    }
+            if ("true" === this.tsizeS)  numS++;
+            if ("true" === this.tsizeM)  numM++;
+            if ("true" === this.tsizeL)  numL++;
+            if ("true" === this.tsizeXL) numXL++;
             
             tableContent += '<tr>';
             tableContent += '<td>' + runnerNum + '</td>';
@@ -82,11 +89,13 @@ function populateTable() {
             //tableContent += '<td><a id="emailaddress" title="Send mail to ' + this.firstname + '" href="mailto:' + this.email + '">' + '*****' + '</a></td>';
 	        tableContent += '<td><a id="duvid" title="Open DUV Stat" href="http://statistik.d-u-v.org/getresultperson.php?runner=' + this.duvid + '">' + this.duvid + '</a></td>';
             tableContent += '<td>' + hasPaid + '</td>';
+            tableContent += '<td>' + sleeps  + '</td>';
             tableContent += '<td>' + (this.tsize ? this.tsize : "") + '</td>';
             tableContent += '<td><a href="#" title="Delete Runner" class="linkdeleteuser" rel="' + this._id + '">delete</a></td>';
 	        tableContent += '<td><a href="#" title="Edit Runner Info" class="linkeditrunner" rel="' + this._id + '">edit</a></td>';
             tableContent += '</tr>';
             runnerNum++;
+	    numberOfRunners++;
         });
 
         summaryContent += '<tr><td>Num runners Paid: </td><td>' + paidNum + '</td></tr>';
@@ -100,6 +109,7 @@ function populateTable() {
         $('#runnerList table tbody').html(tableContent);
         $('#summaryTable table tbody').html(summaryContent);
     });
+    return runnerNum;
 };
 
 // http://jsfiddle.net/cwbuecheler/2qEZ2/
@@ -341,6 +351,8 @@ function lookupDuv(event) {
 		$('#addRunner fieldset input#inputClub').focus().trigger('click');
 		$('#addRunner fieldset input#inputHomepage').val(data.homepage);
 		$('#addRunner fieldset input#inputHomepage').focus().trigger('click');
+		$('#addRunner fieldset input#inputStartNum').val(numberOfRunners + 1);
+		$('#addRunner fieldset input#inputStartNum').focus().trigger('click');
 		return true;
 	    });
 	}
@@ -413,12 +425,12 @@ function addRunner(event) {
             'email'        : $('#addRunner fieldset input#inputEmail').val(),
             'birthday'     : $('#addRunner fieldset input#inputDateOfBirth').val(),
             'yearofbirth'  : $('#addRunner fieldset input#inputYearOfBirth').val(),
-	        'catger'       : $('#addRunner fieldset input#inputCatGer').val(),
-	        'catint'       : $('#addRunner fieldset input#inputCatInt').val(),
+	    'catger'       : $('#addRunner fieldset input#inputCatGer').val(),
+	    'catint'       : $('#addRunner fieldset input#inputCatInt').val(),
             'residence'    : $('#addRunner fieldset input#inputResidence').val(),
             'nationality'  : $('#addRunner fieldset input#inputNationality').val(),
             'club'         : $('#addRunner fieldset input#inputClub').val(),
-	        'homepage'     : $('#addRunner fieldset input#inputHomepage').val(),
+	    'homepage'     : $('#addRunner fieldset input#inputHomepage').val(),
             'phone'        : $('#addRunner fieldset input#inputPhone').val(),
             'mobile'       : $('#addRunner fieldset input#inputMobile').val(),
             'paid'         : $('#addRunner fieldset input#inputPaid').is(":checked"),
