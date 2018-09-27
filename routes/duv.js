@@ -16,12 +16,13 @@ router.get('/getrunner/:id', function(req, res) {
     console.log("getrunner/id=" + duvId);
     //var data = {};
     getRunner(duvId, function(err, data) {
+	//console.log("getRunner err=" + err);
+	//console.log("getRunner data=" + data);
 	if (err === null) {
 	    res.json(data);
 	}
     });
     
-    //console.log("data=" + data);
 
     //res.json(data);
 	// if (err === null) {
@@ -40,12 +41,12 @@ function getRunner(id, callback) {
 
     var duv_url = "http://statistik.d-u-v.org/getresultperson.php?Language=EN&runner=" + id;
     //var runnerData = {};
-    //console.log("this is getRunner(), duv_url=" + duv_url);
+    console.log("this is getRunner(), duv_url=" + duv_url);
     request(duv_url, function (error, response, html) {
 	if (!error && response.statusCode == 200) {
 	    var $ = cheerio.load(html);
 	    var runnerTable;
-
+	    //console.log(html);
 	    $('table').each(function(i, table){
 		if (2 == i) {
 		    runnerTable = table;
@@ -80,7 +81,7 @@ function getRunner(id, callback) {
 			catGer = $(child).children().last().text().trim().match(reg1)[1];
 		    }
 		    if (key === "Date of birth:") {
-			var reg2 = /^\(Cat. international: (.+)\)$/;
+			var reg2 = /^\(Cat. internat.: (.+)\)$/;
 			dateofbirth = val;
 			catInt = $(child).children().last().text().trim().match(reg2)[1];
 		    }
@@ -105,7 +106,7 @@ function getRunner(id, callback) {
 		'nationality' : nationality,
 		'homepage' : homepage
 	    };
-	    //console.log("runnerData returned from DUV:" + runnerData);
+	    console.log("runnerData returned from DUV:" + runnerData);
 	    callback(null, runnerData);
 	}
 	else {

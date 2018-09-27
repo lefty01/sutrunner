@@ -8,28 +8,29 @@ var mongo = require('mongodb');
 var monk = require('monk');
 var mongoose = require('mongoose');
 var assert = require('assert');
+var fs = require('fs');
+var nconf = require('nconf');
+var Strategy = require('passport-local').Strategy;
+var session = require('express-session');
 
-//var db = monk('localhost:27017/sutrunners1');
+nconf.file('ultraresult.conf');
 
-var db = monk('localhost:9999/sutrunners1');
-// this requires ssh port forwarding ...
-// ssh -fN -l user  -L 9999:localhost:54321 server.com
+var database_name = nconf.get('database:name');
+var database_host = nconf.get('database:host');
+var database_port = nconf.get('database:port');
 
+var db = monk(database_host + ':' + database_port + '/' + database_name, function(err, db){
+    if (err) {
+	console.error("error: not connected to database:", err.message);
+    } else {
+	console.log("connected to database");
+    }
+});
 
-// FIXME check if connected ... but how -> db object? or switch to mongoose already
-// MongoClient.connect(url, function(err, db) {
-//   assert.equal(null, err);
-//   console.log("Connected correctly to server.");
-//   db.close();
-// });
-
-// could do this ... or like below without the Schema var.
 //var Schema = mongoose.Schema;
 //var appSchema = new Schema({ .. });
-
 //var maxYear = [currentYear-18, 'Invalid year `{PATH}` ({VALUE}) exceeds the limit ({MAX}).'];
 //var minYear = [1900, 'The value of path `{PATH}` ({VALUE}) is beneath the limit ({MIN}).'];
-
 
 //(NAME FIRSTNAME YEAR CAT PLACE CLUB NAT EMAIL DUVID PHONE MONEY TSIZE SLEEP PACER WAITLIST);
 var runnerSchema = mongoose.Schema({
