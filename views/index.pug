@@ -48,7 +48,7 @@ block content
                 h4.modal-title Runner Info
               div.modal-body
                 div#runnerInfo
-                  include ./inc_userinfo.jade
+                  include ./inc_userinfo.pug
               div.modal-footer
                 button#runnerInfoDeleteBtn.btn.btn-default Delete 
                 button.btn.btn-default(type='button' data-dismiss='modal') Close
@@ -60,13 +60,13 @@ block content
 
         #wrapper
           #newRunnerInfo
-          //   include ./inc_newuserinfo.jade
+          //   include ./inc_newuserinfo.pug
           // // end user info
 
           // ADD USER
           h3 Enter details ...
           #addRunner
-            include ./inc_addrunner.jade
+            include ./inc_addrunner.pug
           // /ADD USER
         // /wrapper
 
@@ -75,7 +75,7 @@ block content
         // EDIT RUNNER
         h3 Edit details ...
         #editRunner
-          include ./inc_editrunner.jade
+          include ./inc_editrunner.pug
         // EDIT USER
         // /wrapper
         
@@ -85,4 +85,4 @@ block content
 
       div#menu_lists.tab-pane.fade
         h3 Gernerate Lists, Reports, etc.
-        include ./inc_genlist.jade
+        include ./inc_genlist.pug
