@@ -16,10 +16,12 @@ router.get('/getrunner/:id', function(req, res) {
     console.log("getrunner/id=" + duvId);
     //var data = {};
     getRunner(duvId, function(err, data) {
-	//console.log("getRunner err=" + err);
 	//console.log("getRunner data=" + data);
 	if (err === null) {
 	    res.json(data);
+	}
+	else {
+	    console.log("getRunner ERROR: " + err);
 	}
     });
     
@@ -66,10 +68,12 @@ function getRunner(id, callback) {
 	    $(runnerTable).children().each(function(n, child) {
 		var key = $(child).children().eq(0).text().trim();
 		var val = $(child).children().eq(1).text().trim();
-
-		if (val !== "") {
+		//console.debug("key=" + key + ", val=" + val);
+		if (val !== "") { // validate via regex eg. /\w+, \w+/
 		    if (key === "Name:") {
 			name = val.split(", ");
+			if (typeof name[0] === 'undefined') { return callback("invalid duv entry (no name)", null); }
+			if (typeof name[1] === 'undefined') { return callback("invalid duv entry (no name)", null); }
 			name[0].trim();
 			name[1].trim();
 		    }

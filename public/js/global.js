@@ -324,12 +324,16 @@ function lookupDuv(event) {
 	    $.getJSON( '/duv/getrunner/' + id, function(data) {
 		console.log("GET /duv/getrunner/duvid=" + id + " callback");
 		var runnerData = data;
+		//console.log("runnerData: error: " + err);
 		console.log("runnerData: duvid=" + data.duvid);
 		console.log("runnerData: lastname=" + data.name);
 		console.log("runnerData: firstname=" + data.firstname);
 		//$('#userInfoFirstName').text(thisUserObject.firstname);
 		//$('#userInfoLastName').text(thisUserObject.lastname);
-		if (data.name === '') {
+		if ((typeof data.name === 'undefined') || (data.name === '') ||
+		    (typeof data.firstname === 'undefined') || (data.name === '')) {
+		    $('#addRunner fieldset input#inputDuvId').val("INVALID");
+		    $('#addRunner fieldset input#inputDuvId').focus().trigger('click');
 		    return false;
 		}
 
