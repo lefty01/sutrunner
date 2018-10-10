@@ -31,8 +31,8 @@ var db = monk(database_host + ':' + database_port + '/' + database_name, functio
 //var appSchema = new Schema({ .. });
 //var maxYear = [currentYear-18, 'Invalid year `{PATH}` ({VALUE}) exceeds the limit ({MAX}).'];
 //var minYear = [1900, 'The value of path `{PATH}` ({VALUE}) is beneath the limit ({MIN}).'];
-
 //(NAME FIRSTNAME YEAR CAT PLACE CLUB NAT EMAIL DUVID PHONE MONEY TSIZE SLEEP PACER WAITLIST);
+// todo: currently unused!!!
 var runnerSchema = mongoose.Schema({
     startnum: Number,
     lastname: String,
@@ -49,24 +49,24 @@ var runnerSchema = mongoose.Schema({
     phone: String,
     email: String,
     flags: {
-	    tsize:    String,
+	tsize:    String,
         tsizeS:   { type: Boolean, default: false },
         tsizeM:   { type: Boolean, default: false },
         tsizeL:   { type: Boolean, default: false },
         tsizeXL:  { type: Boolean, default: false },
-	    paid:     { type: Boolean, default: false },
-	    sleep:    { type: Boolean, default: false },
-	    pacer:    { type: Boolean, default: false },
-	    waitlist: { type: Boolean, default: false }
+	paid:     { type: Boolean, default: false },
+	sleep:    { type: Boolean, default: false },
+	pacer:    { type: Boolean, default: false },
+	waitlist: { type: Boolean, default: false }
     },
     sendsms:  { type: Boolean, default: false },
     lastSeen: {type: Date, default: Date.now}
 });
 
 
-var routes = require('./routes/index');
+var routes  = require('./routes/index');
 var runners = require('./routes/runners');
-var duv = require('./routes/duv');
+var duv     = require('./routes/duv');
 
 var app = express();
 
@@ -74,7 +74,6 @@ var app = express();
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
-//app.set('view engine', 'jade');
 
 
 // uncomment after placing your favicon in /public
@@ -108,23 +107,23 @@ app.use(function(req, res, next) {
 // development error handler
 // will print stacktrace
 if (app.get('env') === 'development') {
-  app.use(function(err, req, res, next) {
-    res.status(err.status || 500);
-    res.render('error', {
-      message: err.message,
-      error: err
+    app.use(function(err, req, res, next) {
+	res.status(err.status || 500);
+	res.render('error', {
+	    message: err.message,
+	    error: err
+	});
     });
-  });
 }
 
 // production error handler
 // no stacktraces leaked to user
 app.use(function(err, req, res, next) {
-  res.status(err.status || 500);
-  res.render('error', {
-    message: err.message,
-    error: {}
-  });
+    res.status(err.status || 500);
+    res.render('error', {
+	message: err.message,
+	error: {}
+    });
 });
 
 

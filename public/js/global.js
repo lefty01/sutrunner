@@ -9,7 +9,7 @@ $(document).ready(function() {
     // Populate the user table on initial page load
     populateTable();
 
-    // Username link click
+    // runnername link click
     $('#runnerList table tbody').on('click', 'td a.linkshowuser', showRunnerInfo);
 
     // Add runner button click
@@ -30,9 +30,9 @@ $(document).ready(function() {
     //$('#btnGenVpList').on('click', genVpList);
 
     
-    // Delete User link click
-    $('#runnerList table tbody').on('click', 'td a.linkdeleteuser', deleteUser);
-    $('#runnerInfoDeleteBtn').on('click', deleteUser);
+    // Delete Runner link click
+    $('#runnerList table tbody').on('click', 'td a.linkdeleteuser', deleteRunner);
+    $('#runnerInfoDeleteBtn').on('click', deleteRunner);
 
     // Edit Runner link click
     $('#runnerList table tbody').on('click', 'td a.linkeditrunner', editRunner);
@@ -83,16 +83,19 @@ function populateTable() {
             tableContent += '<tr>';
             tableContent += '<td>' + runnerNum + '</td>';
             tableContent += '<td>' + (this.startnum ? this.startnum : "") + '</td>';
-            //tableContent += '<td><a href="#runnerInfoModal" class="linkshowuser"  data-toggle="modal" rel="' + this._id + '">' + this.firstname + ' ' + this.lastname + '</a></td>';
+            //tableContent += '<td><a href="#runnerInfoModal" class="linkshowuser"  data-toggle="modal" rel="'
+            //             + this._id + '">' + this.firstname + ' ' + this.lastname + '</a></td>';
             tableContent += '<td><a href="#" class="linkshowuser" rel="' + this._id + '">' + this.firstname + ' ' + this.lastname + '</a></td>';
             tableContent += '<td><a id="emailaddress" title="Send mail to ' + this.firstname + '" href="mailto:' + this.email + '">' + this.email + '</a></td>';
-            //tableContent += '<td><a id="emailaddress" title="Send mail to ' + this.firstname + '" href="mailto:' + this.email + '">' + '*****' + '</a></td>';
-	        tableContent += '<td><a id="duvid" title="Open DUV Stat" href="http://statistik.d-u-v.org/getresultperson.php?runner=' + this.duvid + '">' + this.duvid + '</a></td>';
+            //tableContent += '<td><a id="emailaddress" title="Send mail to ' + this.firstname + '" href="mailto:'
+            //             + this.email + '">' + '*****' + '</a></td>';
+	    tableContent += '<td><a id="duvid" title="Open DUV Stat" href="http://statistik.d-u-v.org/getresultperson.php?runner='
+                         + this.duvid + '">' + this.duvid + '</a></td>';
             tableContent += '<td>' + hasPaid + '</td>';
             tableContent += '<td>' + sleeps  + '</td>';
             tableContent += '<td>' + (this.tsize ? this.tsize : "") + '</td>';
             tableContent += '<td><a href="#" title="Delete Runner" class="linkdeleteuser" rel="' + this._id + '">delete</a></td>';
-	        tableContent += '<td><a href="#" title="Edit Runner Info" class="linkeditrunner" rel="' + this._id + '">edit</a></td>';
+	    tableContent += '<td><a href="#" title="Edit Runner Info" class="linkeditrunner" rel="' + this._id + '">edit</a></td>';
             tableContent += '</tr>';
             runnerNum++;
 	    numberOfRunners++;
@@ -117,19 +120,19 @@ function populateTable() {
 function showRunnerInfo2(data) {
     //Populate Info Box
     $('#userInfoStartNum').text(data.startnum);
-	$('#userInfoFirstName').text(data.firstname);
-	$('#userInfoLastName').text(data.lastname);
-	$('#userInfoDuvId').text(data.duvid);
-	$('#userInfoEmail').text(data.email);
-	$('#userInfoCatGer').text(data.catger);
-	$('#userInfoCatInt').text(data.catint);
-	$('#userInfoAge').text(data.age);
-	$('#userInfoYear').text(data.yearofbirth);
-	$('#userInfoBirthday').text(data.birthday);
-	$('#userInfoClub').text(data.club);
-	$('#userInfoResidence').text(data.residence);
-	$('#userInfoNationality').text(data.nationality);
-	$('#userInfoHomepage').text(data.homepage);
+    $('#userInfoFirstName').text(data.firstname);
+    $('#userInfoLastName').text(data.lastname);
+    $('#userInfoDuvId').text(data.duvid);
+    $('#userInfoEmail').text(data.email);
+    $('#userInfoCatGer').text(data.catger);
+    $('#userInfoCatInt').text(data.catint);
+    $('#userInfoAge').text(data.age);
+    $('#userInfoYear').text(data.yearofbirth);
+    $('#userInfoBirthday').text(data.birthday);
+    $('#userInfoClub').text(data.club);
+    $('#userInfoResidence').text(data.residence);
+    $('#userInfoNationality').text(data.nationality);
+    $('#userInfoHomepage').text(data.homepage);
     $('#userInfoPhone').text(data.phone);
     $('#userInfoMobile').text(data.mobile);
     $('#userInfoPaid').text(data.paid);
@@ -141,20 +144,20 @@ function showRunnerInfo2(data) {
 function fillEditTable(data) {
     $('#editRunner fieldset input#inputid').val(data._id).change();
     $('#editRunner fieldset input#inputStartNum').val(data.startnum).change();
-	$('#editRunner fieldset input#inputFirstName').val(data.firstname).change();
-	$('#editRunner fieldset input#inputLastName').val(data.lastname).change();
-	$('#editRunner fieldset input#inputDuvId').val(data.duvid).show().change();
+    $('#editRunner fieldset input#inputFirstName').val(data.firstname).change();
+    $('#editRunner fieldset input#inputLastName').val(data.lastname).change();
+    $('#editRunner fieldset input#inputDuvId').val(data.duvid).show().change();
     $('#editRunner fieldset input#inputEmail').val(data.email).show().change();
-	$('#editRunner fieldset input#inputYearOfBirth').val(data.yearofbirth).change();
-	$('#editRunner fieldset input#inputDateOfBirth').val(data.birthday).change();
+    $('#editRunner fieldset input#inputYearOfBirth').val(data.yearofbirth).change();
+    $('#editRunner fieldset input#inputDateOfBirth').val(data.birthday).change();
     $('#editRunner fieldset input#inputClub').val(data.club).change();
-	$('#editRunner fieldset input#inputResidence').val(data.residence).change();
-	$('#editRunner fieldset input#inputNationality').val(data.nationality).change();
-	$('#editRunner fieldset input#inputHomepage').val(data.homepage).change();
+    $('#editRunner fieldset input#inputResidence').val(data.residence).change();
+    $('#editRunner fieldset input#inputNationality').val(data.nationality).change();
+    $('#editRunner fieldset input#inputHomepage').val(data.homepage).change();
     $('#editRunner fieldset input#inputPhone').val(data.phone).change();
     $('#editRunner fieldset input#inputMobile').val(data.mobile).change();
-	$('#editRunner fieldset input#inputCatGer').val(data.catger).change();
-	$('#editRunner fieldset input#inputCatInt').val(data.catint).change();
+    $('#editRunner fieldset input#inputCatGer').val(data.catger).change();
+    $('#editRunner fieldset input#inputCatInt').val(data.catint).change();
 
     console.log("fillEditTable: id="  + data._id);
     console.log("fillEditTable: data.paid="  + data.paid);
@@ -211,31 +214,31 @@ function showRunnerInfo(event) {
     event.preventDefault();
 
     $.getJSON( '/runners/getuser/' + $(this).attr('rel'), function(data) {
-	    // sanity check data -> err msg or empty data!?
-	    console.log("showRunnerInfo: duvid=" + data.duvid);
+	// sanity check data -> err msg or empty data!?
+	console.log("showRunnerInfo: duvid=" + data.duvid);
 
-	    //Populate Info Box
+	//Populate Info Box
         $('#userInfoStartNum').text(data.startnum);
-	    $('#userInfoFirstName').text(data.firstname);
-	    $('#userInfoLastName').text(data.lastname);
-	    $('#userInfoDuvId').text(data.duvid);
-	    $('#userInfoEmail').text(data.email);
-	    $('#userInfoCatGer').text(data.catger);
-	    $('#userInfoCatInt').text(data.catint);
-	    $('#userInfoAge').text(data.age);
-	    $('#userInfoYear').text(data.yearofbirth);
-	    $('#userInfoBirthday').text(data.birthday);
-	    $('#userInfoClub').text(data.club);
-	    $('#userInfoResidence').text(data.residence);
-	    $('#userInfoNationality').text(data.nationality);
-	    $('#userInfoHomepage').text(data.homepage);
+	$('#userInfoFirstName').text(data.firstname);
+	$('#userInfoLastName').text(data.lastname);
+	$('#userInfoDuvId').text(data.duvid);
+	$('#userInfoEmail').text(data.email);
+	$('#userInfoCatGer').text(data.catger);
+	$('#userInfoCatInt').text(data.catint);
+	$('#userInfoAge').text(data.age);
+	$('#userInfoYear').text(data.yearofbirth);
+	$('#userInfoBirthday').text(data.birthday);
+	$('#userInfoClub').text(data.club);
+	$('#userInfoResidence').text(data.residence);
+	$('#userInfoNationality').text(data.nationality);
+	$('#userInfoHomepage').text(data.homepage);
         $('#userInfoPhone').text(data.phone);
-        $('#userInfoMobile').text(data.mobile);
-        $('#userInfoPaid').text(data.paid);
-        $('#userInfoSleep').text(data.sleep);
-        $('#userInfoPacer').text(data.pacer);
-        $('#userInfoEarlyStart').text(data.earlystart);
-        $('#userInfoSize').text(data.tsize);
+	$('#userInfoMobile').text(data.mobile);
+	$('#userInfoPaid').text(data.paid);
+	$('#userInfoSleep').text(data.sleep);
+	$('#userInfoPacer').text(data.pacer);
+	$('#userInfoEarlyStart').text(data.earlystart);
+	$('#userInfoSize').text(data.tsize);
     });
 
     // open the user info modal ...
@@ -277,12 +280,13 @@ function genStartList(event) {
         $.each(data, function(){
             tableContent += '<tr>';
             tableContent += '<td>' + runnerNum + '</td>';
+            tableContent += '<td>' + this.startnum + '</td>';
             tableContent += '<td><a href="http://statistik.d-u-v.org/getresultperson.php?runner=' + this.duvid + '" >'
-                + this.firstname + ' ' + this.lastname + '</a></td>';
-	        tableContent += '<td>' + this.nationality + '</td>';
+                         + this.firstname + ' ' + this.lastname + '</a></td>';
+	    tableContent += '<td>' + this.nationality + '</td>';
             tableContent += '<td>' + this.residence + '</td>';
-	        tableContent += '<td>' + this.club + '</td>';
-	        tableContent += '<td>' + this.catger + '</td>';
+	    tableContent += '<td>' + this.club + '</td>';
+	    tableContent += '<td>' + this.catger + '</td>';
             tableContent += '</tr>';
             runnerNum++;
         });
@@ -372,14 +376,13 @@ function addRunner(event) {
     // need to figure what kind of validation materialize and mongoose can do ... and how
     var errorCount = 0;
     $('#addRunner input').each(function(index, val) {
-	    console.log("addrunner, input field: " + val.getAttribute('ID'));
-	    console.log($(this).val());
+	console.log("addrunner: " + val.getAttribute('ID') + "=" + $(this).val());
 
-	    // the fields below are optional, do not increment counter
-	    var optionalInput = ['inputClub', 'inputDateOfBirth', 'inputDuvId',
-			                 'inputEmail', 'inputMobile', 'inputPhone',
-			                 'inputHomepage', 'inputCatGer'];//, 'inputCatInt'];
-	    if (optionalInput.indexOf(val.getAttribute('ID')) > -1) { return false; }
+	// the fields below are optional, do not increment counter
+	var optionalInput = ['inputClub', 'inputDateOfBirth', 'inputDuvId',
+			     'inputEmail', 'inputMobile', 'inputPhone',
+			     'inputHomepage', 'inputCatGer'];//, 'inputCatInt'];
+	if (optionalInput.indexOf(val.getAttribute('ID')) > -1) { return false; }
 	
 	// if (val.getAttribute('ID') === 'inputClub')        { return false; } // continue;
 	// // else validate club
@@ -393,7 +396,7 @@ function addRunner(event) {
 	// if (val.getAttribute('ID') === 'inputCatInt')      { return false; } // continue;
 	
         if ($(this).val() === '') { errorCount++; }
-	    return true;
+	return true;
     });
 
     // validate input fields ...
@@ -415,10 +418,10 @@ function addRunner(event) {
         console.log("addrunner sizes: " + tsizeVal);
 
 
-        
+        // TODO: input field validation!
         // If it is, compile all runner info into one object
-        var newUser = {
-            'startnum'     : $('#addRunner fieldset input#inputStartNum').val(),
+        var newRunner = {
+            'startnum'     : parseInt($('#addRunner fieldset input#inputStartNum').val()),
             'firstname'    : $('#addRunner fieldset input#inputFirstName').val(),
             'lastname'     : $('#addRunner fieldset input#inputLastName').val(),
             'duvid'        : $('#addRunner fieldset input#inputDuvId').val(),
@@ -443,17 +446,18 @@ function addRunner(event) {
             'tsizeXL'      : $('#addRunner fieldset input#inputTsizeXL').is(":checked")
         };
 
-        if (jQuery.type(newUser.tsizeL) === "boolean")
-            console.log("tsizeX is a boolean");
-        if (jQuery.type(newUser.tsizeL) === "string")
-            console.log("tsizeX is a string");
-        
+        // if (jQuery.type(newRunner.tsizeL) === "boolean")
+        //     console.log("tsizeX is a boolean");
+        // if (jQuery.type(newRunner.tsizeL) === "string")
+        //     console.log("tsizeX is a string");
+        console.log("jquery. type of startnum: " + jQuery.type(newRunner.startnum));
+        console.log("typeof newRunner.startnum: " + (typeof newRunner.startnum));
 
 
         // Use AJAX to post the object to our addrunner service
         $.ajax({
             type: 'POST',
-            data: newUser,
+            data: newRunner,
             url: '/runners/adduser',
             dataType: 'JSON'
         }).done(function( response ) {
@@ -489,7 +493,7 @@ function addRunner(event) {
 
 
 // Delete User
-function deleteUser(event) {
+function deleteRunner(event) {
     event.preventDefault();
 
     // Pop up a confirmation dialog
@@ -530,13 +534,8 @@ function saveRunner(event) {
 
     // Pop up a confirmation dialog
     var confirmation = confirm('Are you sure you want to save changes for this runner?');
-
     var runnerId = $('#editRunner fieldset input#inputid').val();
     console.log("saveRunner: id=" + runnerId);    
-
-//    $.getJSON( '/runners/update/' + runnerId , function(data) {
-//
-//    });
 
     // If it is, compile all runner info into one object
     var tsizeVal = "";
@@ -544,7 +543,7 @@ function saveRunner(event) {
     if ($('#editRunner fieldset input#inputSizeM').is(":checked") ) { tsizeVal = "M";  }
     if ($('#editRunner fieldset input#inputSizeL').is(":checked") ) { tsizeVal = "L";  }
     if ($('#editRunner fieldset input#inputSizeXL').is(":checked")) { tsizeVal = "XL"; }
-    console.log("saveRunner: tsize=" + tsizeVal);    
+    //console.log("saveRunner: tsize=" + tsizeVal);
 
     var runner = {
         'startnum'     : parseInt($('#editRunner fieldset input#inputStartNum').val()),
@@ -554,12 +553,12 @@ function saveRunner(event) {
         'email'        : $('#editRunner fieldset input#inputEmail').val(),
         'birthday'     : $('#editRunner fieldset input#inputDateOfBirth').val(),
         'yearofbirth'  : $('#editRunner fieldset input#inputYearOfBirth').val(),
-	    'catger'       : $('#editRunner fieldset input#inputCatGer').val(),
-	    'catint'       : $('#editRunner fieldset input#inputCatInt').val(),
+        'catger'       : $('#editRunner fieldset input#inputCatGer').val(),
+        'catint'       : $('#editRunner fieldset input#inputCatInt').val(),
         'residence'    : $('#editRunner fieldset input#inputResidence').val(),
         'nationality'  : $('#editRunner fieldset input#inputNationality').val(),
         'club'         : $('#editRunner fieldset input#inputClub').val(),
-	    'homepage'     : $('#editRunner fieldset input#inputHomepage').val(),
+        'homepage'     : $('#editRunner fieldset input#inputHomepage').val(),
         'phone'        : $('#editRunner fieldset input#inputPhone').val(),
         'mobile'       : $('#editRunner fieldset input#inputMobile').val(),
         'paid'         : $('#editRunner fieldset input#inputPaid1').is(":checked"),
@@ -573,8 +572,6 @@ function saveRunner(event) {
         'tsizeXL'      : $('#editRunner fieldset input#inputSizeXL').is(":checked")
     };
                
-               
-
     // Check and make sure the user confirmed
     if (confirmation === true) {
 
@@ -612,11 +609,11 @@ function editRunner(event) {
     var runnerId = $(this).attr('rel');
     
     $.getJSON( '/runners/getuser/' + runnerId, function(data) {
-	    // sanity check data -> err msg or empty data!?
+	// sanity check data -> err msg or empty data!?
         
-	    console.log("edit runner id: " + data._id);
+	console.log("edit runner id: " + data._id);
         fillEditTable(data);
-	    //showRunnerInfo2(data);
+	//showRunnerInfo2(data);
     });
 
     $('#maintabbar a[href="#menu_edit"]').tab('show');
