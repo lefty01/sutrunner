@@ -1,25 +1,41 @@
-var express = require('express');
-var path = require('path');
-//var favicon = require('serve-favicon');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
-var mongo = require('mongodb');
-var monk = require('monk');
-var mongoose = require('mongoose');
-var assert = require('assert');
-var fs = require('fs');
-var nconf = require('nconf');
-var Strategy = require('passport-local').Strategy;
-var session = require('express-session');
+const express = require('express');
+const path = require('path');
+const favicon = require('serve-favicon');
+const logger = require('morgan');
+const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
+const cors = require('cors');
+const helmet = require('helmet');
+const morgan = require('morgan');
+const mongo = require('mongodb');
+const monk = require('monk');
+const mongoose = require('mongoose');
+const assert = require('assert');
+const fs = require('fs');
+const nconf = require('nconf');
+const Strategy = require('passport-local').Strategy;
+const session = require('express-session');
+
 
 nconf.file('ultraresult.conf');
 
-var database_name = nconf.get('database:name');
-var database_host = nconf.get('database:host');
-var database_port = nconf.get('database:port');
+const database_name       = nconf.get('database:name');
+const database_host       = nconf.get('database:host');
+const database_port       = nconf.get('database:port');
+const database_sslcafile  = nconf.get('database:sslcafile');
+const database_sslkeyfile = nconf.get('database:sslkeyfile');
+const database_authdb     = nconf.get('database:authdb');
+const database_username   = nconf.get('database:username');
+const database_password   = nconf.get('database:password');
 
-var db = monk(database_host + ':' + database_port + '/' + database_name, function(err, db){
+const db_conn_uri = 'mongodb://' + database_host + ':' + database_port + '/' + database_name
+      + '?tls=true&tlsCAFile=' + database_sslcafile + '&tlsCertificateKeyFile='
+      + database_sslkeyfile + '&username=' + database_username + '&password='
+      + database_password + '&authenticationDatabase=' + database_authdb;
+
+console.log('database uri:  ' + db_conn_uri);
+
+var db = monk(db_conn_uri, function(err, db) {
     if (err) {
 	console.error("error: not connected to database:", err.message);
     } else {
@@ -69,6 +85,20 @@ var runners = require('./routes/runners');
 var duv     = require('./routes/duv');
 
 var app = express();
+app.use(helmet());
+app.use(
+  helmet.contentSecurityPolicy({
+    useDefaults: true,
+    directives: {
+      "script-src-elem": ["'self'", "https://cdn.jsdelivr.net", "https://maxcdn.bootstrapcdn.com", "https://code.jquery.com"],
+      "style-src":       ["'self'", "https://cdn.jsdelivr.net", "https://maxcdn.bootstrapcdn.com"],
+    },
+  })
+);
+
+
+app.use(cors());
+app.use(morgan('combined'));
 
 
 // view engine setup
