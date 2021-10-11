@@ -8,7 +8,7 @@ var router = express.Router();
 router.get('/runnerlist', function(req, res) {
     var db = req.db;
     var collection = db.get('runnerlist');
-    collection.find({}, { fields: {}, sort : {startnum : 1} }  , function(err, docs) {
+    collection.find({}, { fields: {}, sort : {startnum : 1} }, function(err, docs) {
         res.json(docs);
     });
 });
@@ -86,8 +86,8 @@ router.post('/adduser', function(req, res) {
 router.delete('/deleteuser/:id', function(req, res) {
     var db = req.db;
     var collection = db.get('runnerlist');
-    var userToDelete = req.params.id;
-    collection.remove({ '_id' : userToDelete }, function(err) {
+    var runnerToDelete = req.params.id;
+    collection.remove({ '_id' : runnerToDelete }, function(err) {
         res.send((err === null) ? { msg: '' } : { msg:'error: ' + err });
     });
 });
@@ -102,16 +102,17 @@ router.put('/update/:id', function(req, res) {
 
     console.log("Update runner: ID=" + runnerToUpdate);
     //console.log("/runners/update: typeof startnum: " + (typeof req.body.startnum));
-    req.body.startnum = parseInt(req.body.startnum);
-        
-    //collection.findOneAndUpdate({ '_id' : runnerToUpdate }, function(err, data) {
-    //});
-    // FIXME: this currently overwrites any results stored for the runner!? not sure if it really matters
+    console.log(JSON.stringify(req.body));
 
-    collection.update({ _id: runnerToUpdate}, req.body, function(err, cnt, stat){
-        res.send((err === null) ? { msg: '' } : { msg:'error: ' + err });
-        console.log("update  count=" + cnt.nModified);
-        console.log("update status=" + stat);
+    req.body.startnum = parseInt(req.body.startnum);
+    //var newvalues = { $set: req.body };
+
+    collection.update({ _id: runnerToUpdate}, req.body, {replaceOne: true}, function(err, result) {
+        console.log("error: " + err);
+	console.log(JSON.stringify(result));
+	// {"n":1,"nModified":1,"ok":1}
+	//if (result.nModified === 1)
+        res.send((err === null) ? { msg: 'modified: ' + result.nModified } : { msg:'error: ' + err });
     });
     
 });

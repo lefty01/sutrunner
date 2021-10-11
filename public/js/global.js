@@ -587,12 +587,12 @@ function saveRunner(event) {
         }).done(function( response ) {
 
             // Check for a successful (blank) response
-            if (response.msg === '') {
-            }
-            else {
-                alert('Error: ' + response.msg);
-            }
-
+            //if (response.msg === '') {
+            //}
+            //else {
+            //    alert('Update: ' + response.msg);
+            //}
+	    alert('Update: ' + response.msg);
             // Update the table
             populateTable();
         });
