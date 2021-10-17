@@ -1,16 +1,21 @@
 
-var request = require('request');
-var cheerio = require('cheerio');
+const request = require('request');
+const cheerio = require('cheerio');
 
-var express = require('express');
-var router  = express.Router();
+const express = require('express');
+const router  = express.Router();
 
-const duvdbg = require('debug')('sut-runners:duv');
+const duvdbg = require('debug')('sutrunners:duv');
 
 /*
  * GET duv info.
  */
 router.get('/getrunner/:id', function(req, res) {
+  if (! (req.session.loggedIn && req.session.isAdmin)) {
+    duvdbg('not logged in');
+    return res.render('login');
+  }
+
   var duvId = req.params.id.trim().match(/(\d+)/)[1];
   if (! duvId) {
     res.json({error: "none or invalid duvId"});

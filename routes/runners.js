@@ -1,6 +1,7 @@
-var express = require('express');
-var assert = require('assert');
-var router = express.Router();
+const express = require('express');
+const assert = require('assert');
+const router = express.Router();
+const debug_app = require('debug')('sutrunners:runners');
 
 /*
  * GET runnerlist.
@@ -9,7 +10,7 @@ router.get('/runnerlist', function(req, res) {
     var db = req.db;
     var collection = db.get('runnerlist');
     collection.find({}, { fields: {}, sort : {startnum : 1} }, function(err, docs) {
-        res.json(docs);
+        return res.json(docs);
     });
 });
 
@@ -31,7 +32,7 @@ router.get('/starterlist', function(req, res) {
                                  }, sort : {startnum : 1}
                         }, function(err, docs) {
                             console.log(docs);
-                            res.json(docs);
+                            return res.json(docs);
     });
 });
 
@@ -46,17 +47,22 @@ router.get('/starter_html', function(req, res) {
  * GET single user.
  */
 router.get('/getuser/:id', function(req, res) {
-    var db = req.db;
-    var collection = db.get('runnerlist');
-    console.log("runners document id: " + req.params.id);
-    collection.findOne({_id: req.params.id}, function(err, docs) {
-	if (err === null) {
-	    res.json(docs);
-	}
-        else {
-	    res.json({msg: 'error: ' + err});
-	}
-    });
+  if (! (req.session.loggedIn && req.session.isAdmin)) {
+    debug_app('not logged in');
+    return res.render('login');
+  }
+
+  var db = req.db;
+  var collection = db.get('runnerlist');
+  console.log("runners document id: " + req.params.id);
+  collection.findOne({_id: req.params.id}, function(err, docs) {
+    if (err === null) {
+      return res.json(docs);
+    }
+    else {
+      return res.json({msg: 'error: ' + err});
+    }
+  });
 });
 
 
@@ -65,56 +71,70 @@ router.get('/getuser/:id', function(req, res) {
  * POST to adduser.
  */
 router.post('/adduser', function(req, res) {
-    var db = req.db;
-    var collection = db.get('runnerlist');
+  if (! (req.session.loggedIn && req.session.isAdmin)) {
+    debug_app('not logged in');
+    return res.render('login');
+  }
 
-    req.body.startnum = parseInt(req.body.startnum);
-    console.log("/runners/adduser: startnum=" + req.body.startnum);
+  var db = req.db;
+  var collection = db.get('runnerlist');
 
-    collection.insert(req.body, function(err, result) {
-        assert.equal(err, null);
+  req.body.startnum = parseInt(req.body.startnum);
+  console.log("/runners/adduser: startnum=" + req.body.startnum);
+
+  collection.insert(req.body, function(err, result) {
+    assert.equal(err, null);
         
-        res.send(
-            (err === null) ? { msg: '' } : { msg: err }
-        );
-    });
+    res.send(
+      (err === null) ? { msg: '' } : { msg: err }
+    );
+  });
 });
 
 /*
  * DELETE to deleteuser.
  */
 router.delete('/deleteuser/:id', function(req, res) {
-    var db = req.db;
-    var collection = db.get('runnerlist');
-    var runnerToDelete = req.params.id;
-    collection.remove({ '_id' : runnerToDelete }, function(err) {
-        res.send((err === null) ? { msg: '' } : { msg:'error: ' + err });
-    });
+  if (! (req.session.loggedIn && req.session.isAdmin)) {
+    debug_app('not logged in');
+    return res.render('login');
+  }
+
+  var db = req.db;
+  var collection = db.get('runnerlist');
+  var runnerToDelete = req.params.id;
+  collection.remove({ '_id' : runnerToDelete }, function(err) {
+    res.send((err === null) ? { msg: '' } : { msg:'error: ' + err });
+  });
 });
 
 /*
  * PUT / update runner info
  */
 router.put('/update/:id', function(req, res) {
-    var db = req.db;
-    var collection = db.get('runnerlist');
-    var runnerToUpdate = req.params.id;
+  if (! (req.session.loggedIn && req.session.isAdmin)) {
+    debug_app('not logged in');
+    return res.render('login');
+  }
 
-    console.log("Update runner: ID=" + runnerToUpdate);
-    //console.log("/runners/update: typeof startnum: " + (typeof req.body.startnum));
-    console.log(JSON.stringify(req.body));
+  var db = req.db;
+  var collection = db.get('runnerlist');
+  var runnerToUpdate = req.params.id;
 
-    req.body.startnum = parseInt(req.body.startnum);
-    //var newvalues = { $set: req.body };
+  console.log("Update runner: ID=" + runnerToUpdate);
+  //console.log("/runners/update: typeof startnum: " + (typeof req.body.startnum));
+  console.log(JSON.stringify(req.body));
 
-    collection.update({ _id: runnerToUpdate}, req.body, {replaceOne: true}, function(err, result) {
-        console.log("error: " + err);
-	console.log(JSON.stringify(result));
-	// {"n":1,"nModified":1,"ok":1}
-	//if (result.nModified === 1)
-        res.send((err === null) ? { msg: 'modified: ' + result.nModified } : { msg:'error: ' + err });
-    });
-    
+  req.body.startnum = parseInt(req.body.startnum);
+  //var newvalues = { $set: req.body };
+
+  collection.update({ _id: runnerToUpdate}, req.body, {replaceOne: true}, function(err, result) {
+    console.log("error: " + err);
+    console.log(JSON.stringify(result));
+    // {"n":1,"nModified":1,"ok":1}
+    //if (result.nModified === 1)
+    return res.send((err === null) ? { msg: 'modified: ' + result.nModified } : { msg:'error: ' + err });
+  });
 });
 
 
