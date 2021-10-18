@@ -37,10 +37,10 @@ app.set('aid_secret', process.env.UR_SESSION_SECRET || session_secret);
 app.set('aid_key', process.env.UR_SESSION_KEY || session_key);
 app.set('salty', process.env.UR_SALT || salt);
 
-const db_conn_uri = 'mongodb://' + database_host + ':' + database_port + '/' + database_name
-      + '?tls=true&tlsCAFile=' + database_sslcafile + '&tlsCertificateKeyFile='
-      + database_sslkeyfile + '&username=' + database_username + '&password='
-      + database_password + '&authenticationDatabase=' + database_authdb;
+const db_conn_uri = 'mongodb://' + database_host + ':' + database_port + '/' + database_name +
+      '?tls=true&tlsCAFile=' + database_sslcafile + '&tlsCertificateKeyFile=' +
+      database_sslkeyfile + '&username=' + database_username + '&password=' +
+      database_password + '&authenticationDatabase=' + database_authdb;
 
 debug_app('database uri:  ' + db_conn_uri);
 debug_app('session secret: ' + app.get('aid_secret') + ', key: ' + app.get('aid_key'));
