@@ -2,7 +2,7 @@
     "name": "ultra-runners",
     "author": "Andreas Loeffler <al@exitzero.de>",
     "license": "GPL-3.0-or-later",
-    "version": "0.0.7",
+    "version": "0.0.8",
     "private": true,
     "scripts": {
         "start": "UR_SESSION_SECRET=$(head -c32 /dev/urandom | base64) UR_SESSION_KEY=$(head -c8 /dev/urandom | base64) node ./bin/sutrunner",
@@ -24,8 +24,9 @@
         "mongoose": "^5.13.10",
         "monk": "^7.3.4",
         "morgan": "^1.10.0",
-        "nconf": "^0.10.0",
+        "nconf": "^0.12.0",
         "passport-local": "^1.0.0",
+        "project-version": "^2.0.0",
         "pug": "^3.0.2",
         "request": "^2.88.0",
         "serve-favicon": "^2.5.0"
