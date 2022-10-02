@@ -1,3 +1,5 @@
+// Copyright (C) 2016-2022 Andreas Loeffler (https://exitzero.de) 
+
 const express = require('express');
 const path = require('path');
 const favicon = require('serve-favicon');
@@ -13,6 +15,7 @@ const mongoose = require('mongoose');
 const assert = require('assert');
 const fs = require('fs');
 const nconf = require('nconf');
+const version = require('project-version');
 const Strategy = require('passport-local').Strategy;
 const session = require('express-session');
 const bcrypt = require('bcryptjs');
@@ -33,18 +36,21 @@ const database_password   = nconf.get('database:password');
 const session_secret = nconf.get('aidauth:session_secret');
 const session_key    = nconf.get('aidauth:session_key');
 const salt           = nconf.get('aidauth:salt');
+
 app.set('aid_secret', process.env.UR_SESSION_SECRET || session_secret);
-app.set('aid_key', process.env.UR_SESSION_KEY || session_key);
-app.set('salty', process.env.UR_SALT || salt);
+app.set('aid_key',    process.env.UR_SESSION_KEY    || session_key);
+app.set('salty',      process.env.UR_SALT           || salt);
 
 const db_conn_uri = 'mongodb://' + database_host + ':' + database_port + '/' + database_name +
       '?tls=true&tlsCAFile=' + database_sslcafile + '&tlsCertificateKeyFile=' +
       database_sslkeyfile + '&username=' + database_username + '&password=' +
-      database_password + '&authenticationDatabase=' + database_authdb;
+      encodeURIComponent(database_password) + '&authenticationDatabase=' + database_authdb;
+
+const progname = process.env.npm_package_name    || "sutrunner";
+const progver  = process.env.npm_package_version || version;
 
 debug_app('database uri:  ' + db_conn_uri);
 debug_app('session secret: ' + app.get('aid_secret') + ', key: ' + app.get('aid_key'));
-
 
 const db = monk(db_conn_uri, function(err, db) {
     if (err) {

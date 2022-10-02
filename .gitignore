@@ -1,5 +1,6 @@
 # configs not to be comitted
 ultraresult.conf
+bin/ultraresult
 
 # Logs
 logs
